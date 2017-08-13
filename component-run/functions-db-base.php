@@ -105,7 +105,6 @@ function _dbBaseContains( $id ) {
 
 function _dbBaseDebug( ) {
 
-
     $dbh = _configBaseQuery( "dbh" ) ;
     $sql = "SELECT * FROM entities ;" ;
 
@@ -115,5 +114,34 @@ function _dbBaseDebug( ) {
     $rows= $sth->fetchAll(PDO::FETCH_ASSOC);
 
     _logBaseWrite($rows);
+
+}
+
+function _dbBaseSelect( $state ) {
+
+    $dbh = _configBaseQuery( "dbh" ) ;
+    $sql = "SELECT * FROM entities where state = :state ;" ;
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute(array("state"=>$state));
+
+    $rows= $sth->fetchAll(PDO::FETCH_ASSOC);
+
+    //_logBaseWrite($rows);
+
+    return($rows);
+
+}
+
+function _dbBaseStateSet($id,$state){
+
+    $dbh = _configBaseQuery( "dbh" ) ;
+    $sql="UPDATE entities SET  state = :state where id = :id ;"  ;
+    $sth = $dbh->prepare($sql );
+    $sth->execute(array(":id" => $id , ":state"=>$state));
+
+
+
+
 
 }

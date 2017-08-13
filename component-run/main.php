@@ -1,6 +1,11 @@
 <?php
 
+//_configBaseDebug();exit;
+//_dbBaseDebug();exit;
+
 include( "scanfornew.php" ) ;
 
-///_configBaseDebug();
-_dbBaseDebug();exit;
+
+
+
+include( "state-0-thumbnails.php" ) ;

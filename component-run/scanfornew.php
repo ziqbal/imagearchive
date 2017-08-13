@@ -33,6 +33,8 @@ exit;
 //_dbBaseDebug();exit;
 
 
+$cc = 0 ; 
+
 $scandir=_configBaseQuery("targetdir");
 
 $entities = _fsBaseRecursive( $scandir , "" , "jpg" ) ;
@@ -58,12 +60,17 @@ foreach( $entities as $entity ) {
 
     }
 
-        print(".");
+    print( "." ) ;
+
+    $cc++;
+    //if($cc>10) break;
+
 }
 
 
 //////////////////
 
+$cc=0;
 
 $entities = _fsBaseRecursive( $scandir , "" , "jpeg" ) ;
 
@@ -87,8 +94,10 @@ foreach( $entities as $entity ) {
 
     }
 
-    print(".");
+    print( "." ) ;
+    $cc++;
+    //if($cc>10) break;
 
 }
 
-    print("\n");
+print( "\n" ) ;
