@@ -44,7 +44,7 @@ foreach( $entities as $e ) {
     $target = _configBaseQuery("componentcache") . "/$id-l.$ext" ;
     $source=escapeshellarg($source);
     $target=escapeshellarg($target);
-    $cmd = "convert $source -auto-orient -filter Lanczos -quality 85 -thumbnail x1200 $target" ;
+    $cmd = "convert $source -sampling-factor 1x1 -unsharp 1.5x1+0.7+0.02 -auto-orient -filter Lanczos -quality 85 -thumbnail x1200 $target" ;
 //    _logBaseWrite($cmd);
     system($cmd);
 
@@ -69,6 +69,8 @@ foreach( $entities as $e ) {
     $source=escapeshellarg($source);
     $target=escapeshellarg($target);
     $cmd="convert $source -filter Lanczos -quality 80 -thumbnail 150x150^ -gravity center -extent 150x150 $target";
+
+    //-sampling-factor 1x1 -unsharp 1.5x1+0.7+0.02 -quality 90
 //    _logBaseWrite($cmd);
     system($cmd);
 
