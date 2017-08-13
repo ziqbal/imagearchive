@@ -26,6 +26,8 @@ function _configBaseInit( ) {
 	_configBaseQuery( "appcache" , _configBaseQuery( "appdir" ) . "/_cache_" ) ;
     _configBaseQuery( "componentcache" , _configBaseQuery( "componentdir" ) . "/_cache_" ) ;
 
+    _configBaseQuery( "datadir" , _configBaseQuery( "appdir" ) . "/data" ) ;
+
 	if( ! file_exists( _configBaseQuery( "componentcache" ) ) ) {
 
 		mkdir( _configBaseQuery( "componentcache" ) ) ;
