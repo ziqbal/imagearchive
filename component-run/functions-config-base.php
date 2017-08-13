@@ -19,11 +19,12 @@ function _configBaseInit( ) {
 	_configBaseQuery( "hostname" , $argv[ 2 ] ) ;
 	_configBaseQuery( "timestamp" , $argv[ 3 ] ) ;
 	_configBaseQuery( "spid" , $argv[ 4 ] ) ;
-	_configBaseQuery( "scriptdir" , __DIR__ ) ;
+	_configBaseQuery( "componentdir" , __DIR__ ) ;
+    _configBaseQuery( "logdir" , "/tmp" ) ;
 	_configBaseQuery( "basename" , basename( __DIR__ ) ) ;
 
-	_configBaseQuery( "appcache" , _configBaseQuery( "scriptdir" )."/../_cache_" ) ;
-    _configBaseQuery( "componentcache" , _configBaseQuery( "scriptdir" )."/_cache_" ) ;
+	_configBaseQuery( "appcache" , _configBaseQuery( "componentdir" )."/../_cache_" ) ;
+    _configBaseQuery( "componentcache" , _configBaseQuery( "componentdir" )."/_cache_" ) ;
 
 	if( ! file_exists( _configBaseQuery( "componentcache" ) ) ) {
 
@@ -39,6 +40,8 @@ function _configBaseInit( ) {
     }
 
 
+    _configBaseQuery( "componentcache" , realpath( _configBaseQuery( "componentcache" ) ) ) ;
+    _configBaseQuery( "appcache" , realpath( _configBaseQuery( "appcache" ) ) ) ;
 
 }
 

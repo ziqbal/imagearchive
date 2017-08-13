@@ -20,6 +20,6 @@ function _logBaseWrite( $msg , $key='DEBUG' ) {
 
 	$msg = _configBaseQuery( "spid" )."-"._configBaseQuery( "pid" ).",$key,".$msg;
 
-	file_put_contents( "/tmp/"._configBaseQuery( "basename" ).".log" , "$msg\n" , FILE_APPEND | LOCK_EX ) ;
+	file_put_contents( _configBaseQuery( "logdir" ) ."/"._configBaseQuery( "basename" ).".log" , "$msg\n" , FILE_APPEND | LOCK_EX ) ;
 
 }
