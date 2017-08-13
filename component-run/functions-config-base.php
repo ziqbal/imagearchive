@@ -1,6 +1,5 @@
 <?php
 
-
 $_CONFIG_ = array( ) ;
 
 function _configBase( ) {
@@ -24,8 +23,8 @@ function _configBaseInit( ) {
     _configBaseQuery( "logdir" , "/tmp" ) ;
 	_configBaseQuery( "basename" , basename( __DIR__ ) ) ;
 
-	_configBaseQuery( "appcache" , _configBaseQuery( "appdir" )."/_cache_" ) ;
-    _configBaseQuery( "componentcache" , _configBaseQuery( "componentdir" )."/_cache_" ) ;
+	_configBaseQuery( "appcache" , _configBaseQuery( "appdir" ) . "/_cache_" ) ;
+    _configBaseQuery( "componentcache" , _configBaseQuery( "componentdir" ) . "/_cache_" ) ;
 
 	if( ! file_exists( _configBaseQuery( "componentcache" ) ) ) {
 
@@ -33,14 +32,13 @@ function _configBaseInit( ) {
 		chmod( _configBaseQuery( "componentcache" ) , 0777 ) ;
 
 	}
+
     if( ! file_exists( _configBaseQuery( "appcache" ) ) ) {
 
         mkdir( _configBaseQuery( "appcache" ) ) ;
         chmod( _configBaseQuery( "appcache" ) , 0777 ) ;
 
     }
-
-
 
 }
 

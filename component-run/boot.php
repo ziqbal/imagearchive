@@ -6,7 +6,6 @@ require( "functions-boot-base.php" ) ;
 
 _configBaseDebug( ) ;
 
-_envBaseExitIfNotStatic( ) ;
 
 ////////////////////////////////////////////////////////
 
