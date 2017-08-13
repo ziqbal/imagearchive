@@ -38,7 +38,7 @@ function _fsBaseRecursive( $p , $pre = "" , $post = "" ) {
 
 	    $res[ ] = array(
 
-            "pathname" => $f -> getPathname( ) ,
+            "filepath" => $f -> getPathname( ) ,
             "filename" => $filename ,
             "path" => $path , "ext" => $ext
 
