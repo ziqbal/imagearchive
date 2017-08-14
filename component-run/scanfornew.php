@@ -63,7 +63,7 @@ foreach( $entities as $entity ) {
     print( "." ) ;
 
     $cc++;
-    //if($cc>10) break;
+    //if($cc>3) break;
 
 }
 

@@ -121,6 +121,21 @@ function _dbBaseDebug( ) {
 
 }
 
+function _dbBaseGet($id){
+
+
+    $dbh = _configBaseQuery( "dbh" ) ;
+    $sql = "SELECT * FROM entities where id = :id;" ;
+
+    $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute(array(":id"=>$id));
+
+    $rows= $sth->fetchAll(PDO::FETCH_ASSOC);
+
+    return($rows);
+
+}
+
 function _dbBaseSelect( $state ) {
 
     $dbh = _configBaseQuery( "dbh" ) ;
@@ -147,5 +162,21 @@ function _dbBaseStateSet($id,$state){
 
 
 
+
+}
+
+
+function _dbBaseSetDataState($id,$datain,$state){
+
+    if(is_array($datain)){
+        $data=json_encode($datain);
+    }else{
+        $data=$datain;
+    }
+
+    $dbh = _configBaseQuery( "dbh" ) ;
+    $sql="UPDATE entities SET  data = :data , state = :state where id = :id ;"  ;
+    $sth = $dbh->prepare($sql );
+    $sth->execute(array(":id" => $id , ":data" => $data , ":state"=>$state));
 
 }

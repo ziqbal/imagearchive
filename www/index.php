@@ -30,10 +30,10 @@ try {
 }
 
 
-$sql = "SELECT * FROM entities where state = :state ORDER BY rowid limit 25;" ;
+$sql = "SELECT * FROM entities where state = :state ORDER BY rowid limit 250;" ;
 
 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-$sth->execute(array("state"=>1));
+$sth->execute(array("state"=>2));
 
 $count = $sth->fetchColumn(); 
 print_r($count);
@@ -43,7 +43,11 @@ print("<hr/>");
 $cc=0;
 while($row = $sth->fetch( PDO::FETCH_ASSOC )){ 
     $id=$row["id"];
-    print("<img class='thumbnail c$cc' src='../component-run/_cache_/$id-t.jpg'/>");
+    $d = json_decode( $row[ "data" ] , true ) ;
+    $prefix=$d["prefix"];
+    $ext = $d["fs"]["ext"];
+
+    print("<img class='thumbnail c$cc' src='../_cache_/$prefix-$id-t.$ext'/>");
     $cc++;
 }
 
