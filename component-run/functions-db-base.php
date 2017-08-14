@@ -11,6 +11,8 @@ function _dbBase( ) {
 
     if( !file_exists( $dbpath ) ) {
 
+        mkdir(_configBaseQuery( "datadir" ));
+
         $flagCreateTables = true ;
         
     }
@@ -22,6 +24,8 @@ function _dbBase( ) {
         $dbh->setAttribute( PDO::ATTR_FETCH_TABLE_NAMES , true ) ;
 
     } catch( Exception $e ) {
+
+        _logBaseWrite($e->getMessage());
 
         _logBaseWrite( "Unable to connect" ) ;
         exit ;
