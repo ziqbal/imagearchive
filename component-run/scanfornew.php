@@ -55,7 +55,9 @@ foreach( $entities as $entity ) {
         $data[ "st" ] = stat($entity[ "filepath" ]);
         $data[ "in" ] = getimagesize($entity[ "filepath" ]);
 
-        _dbBaseInsert( $id, $data ) ;
+        $ord = $data["st"]["mtime"];
+        $state = 0 ;
+        _dbBaseInsert( $id, $state , $data , $ord ) ;
 
 
     }
@@ -90,7 +92,9 @@ foreach( $entities as $entity ) {
         $data[ "st" ] = stat($entity[ "filepath" ]);
         $data[ "in" ] = getimagesize($entity[ "filepath" ]);
 
-        _dbBaseInsert( $id, $data ) ;
+        $ord = $data["st"]["mtime"];
+        $state = 0 ;
+        _dbBaseInsert( $id, $state , $data , $ord ) ;
 
     }
 

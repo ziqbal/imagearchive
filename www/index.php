@@ -30,15 +30,15 @@ try {
 }
 
 
-$sql = "SELECT * FROM entities where state = :state ORDER BY rowid limit 250;" ;
+//$sql = "SELECT * FROM entities where state = :state ORDER BY rowid limit 250;" ;
+$sql = "SELECT * FROM entities where state = :state ORDER BY ord,rowid limit 250;" ;
 
 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute(array("state"=>2));
 
-$count = $sth->fetchColumn(); 
-print_r($count);
-print("<hr/>");
 
+
+$lastPrefixMain="";
 
 $cc=0;
 while($row = $sth->fetch( PDO::FETCH_ASSOC )){ 
@@ -46,6 +46,20 @@ while($row = $sth->fetch( PDO::FETCH_ASSOC )){
     $d = json_decode( $row[ "data" ] , true ) ;
     $prefix=$d["prefix"];
     $ext = $d["fs"]["ext"];
+
+    $prefixParts=explode("/",$prefix);
+
+    $prefixMain=$prefixParts[0];
+
+    if($lastPrefixMain==""){
+        print("$prefixMain<br/>");
+        $lastPrefixMain=$prefixMain;
+    }
+    if($lastPrefixMain!="" && $lastPrefixMain!=$prefixMain){
+        print("<br/>$prefixMain<br/>");
+        $lastPrefixMain=$prefixMain;
+    }
+
 
     print("<img class='thumbnail c$cc' src='../_cache_/$prefix-$id-t.$ext'/>");
     $cc++;

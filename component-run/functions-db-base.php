@@ -11,7 +11,9 @@ function _dbBase( ) {
 
     if( !file_exists( $dbpath ) ) {
 
-        mkdir(_configBaseQuery( "datadir" ));
+        if(!is_dir(_configBaseQuery( "datadir" ))){
+            mkdir(_configBaseQuery( "datadir" ));
+        }
 
         $flagCreateTables = true ;
         
@@ -34,9 +36,9 @@ function _dbBase( ) {
 
     if( $flagCreateTables ) {
 
-        $dbh->exec( "CREATE TABLE IF NOT EXISTS entities ( id TEXT , state INTEGER , data BLOB ) " ) ;  
-
+        $dbh->exec( "CREATE TABLE IF NOT EXISTS entities ( id TEXT , state INTEGER , data BLOB , ord INTEGER ) " ) ;  
         $dbh->exec( "CREATE UNIQUE INDEX IF NOT EXISTS indexid ON entities( id ) ;" ) ;
+        $dbh->exec( "CREATE INDEX IF NOT EXISTS ordid ON entities( ord ) ;" ) ;
     
     }
 
@@ -54,12 +56,13 @@ function _dbBase( ) {
     }
     */
 
-    _configBaseQuery("dbh",$dbh);
+    _configBaseQuery( "dbh" , $dbh ) ;
 
 
 }
 
-function _dbBaseInsert( $id , $datain ) {
+function _dbBaseInsert( $id, $state , $datain , $ord ) {
+//function _dbBaseInsert( $id , $datain ) {
 
     if(is_array($datain)){
         $data=json_encode($datain);
@@ -69,10 +72,12 @@ function _dbBaseInsert( $id , $datain ) {
 
     $dbh = _configBaseQuery( "dbh" ) ;
 
-    $stmt = $dbh->prepare( "INSERT INTO entities ( id , state , data ) VALUES ( :id , 0 , :data ) ; " ) ;
+    $stmt = $dbh->prepare( "INSERT INTO entities ( id , state , data , ord ) VALUES ( :id , :state , :data , :ord) ; " ) ;
 
     $stmt->bindParam( ":id", $id ) ;
+    $stmt->bindParam( ":state" , $state);
     $stmt->bindParam( ":data" , $data );
+    $stmt->bindParam( ":ord" , $ord);
 
 
     try {
