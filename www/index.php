@@ -34,7 +34,7 @@ try {
 $sql = "SELECT * FROM entities where state = :state ORDER BY ord,rowid limit 250;" ;
 
 $sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-$sth->execute(array("state"=>2));
+$sth->execute(array("state"=>-1));
 
 
 

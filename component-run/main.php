@@ -17,7 +17,7 @@ if(substr($s1,0,strlen($s2))==$s2){
 
 
 
-//$d=_dbBaseGet("9aa80d3c3ec9274e60094e8cf2bbf7b07c1546c5");
+//$d=_dbBaseGet("7b8a3595ef88ad3cecf37e6f62c25f1643900c69");
 //print_r($d);exit;
 
 //_configBaseDebug();exit;
@@ -30,6 +30,5 @@ include( "scanfornew.php" ) ;
 
 include( "state-0-thumbnails.php" ) ;
 include( "state-1-directories.php" ) ;
-
 
 include( "state-last-move.php" ) ;

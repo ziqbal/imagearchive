@@ -11,4 +11,6 @@ if(count($t)>2){
 
     system($cmd);
 
+    _dbBaseStateFromTo( 2 , -1 ) ;
+
 }

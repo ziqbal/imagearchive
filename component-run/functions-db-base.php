@@ -36,9 +36,10 @@ function _dbBase( ) {
 
     if( $flagCreateTables ) {
 
-        $dbh->exec( "CREATE TABLE IF NOT EXISTS entities ( id TEXT , state INTEGER , data BLOB , ord INTEGER ) " ) ;  
+        $dbh->exec( "CREATE TABLE IF NOT EXISTS entities ( id TEXT , state INTEGER DEFAULT 0 , data BLOB , ord INTEGER DEFAULT 0 , flag INTEGER DEFAULT 0 , lum INTEGER DEFAULT 0 ) " ) ;  
         $dbh->exec( "CREATE UNIQUE INDEX IF NOT EXISTS indexid ON entities( id ) ;" ) ;
-        $dbh->exec( "CREATE INDEX IF NOT EXISTS ordid ON entities( ord ) ;" ) ;
+        $dbh->exec( "CREATE INDEX IF NOT EXISTS indexord ON entities( ord ) ;" ) ;
+        $dbh->exec( "CREATE INDEX IF NOT EXISTS indexflag ON entities( flag ) ;" ) ;
     
     }
 
@@ -156,6 +157,18 @@ function _dbBaseSelect( $state ) {
     return($rows);
 
 }
+
+function _dbBaseStateFromTo( $from , $to ) {
+
+    $rows = _dbBaseSelect($from);
+    foreach($rows as $row){
+        _dbBaseStateSet($row["id"],$to);
+
+    }
+
+
+}
+
 
 function _dbBaseStateSet($id,$state){
 

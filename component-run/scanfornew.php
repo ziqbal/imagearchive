@@ -29,15 +29,14 @@ if(_dbBaseContains("ABC1502627096")){
 exit;
 */
 
-///_configBaseDebug();
-//_dbBaseDebug();exit;
+
 
 
 $cc = 0 ; 
 
 $scandir=_configBaseQuery("targetdir");
 
-$entities = _fsBaseRecursive( $scandir , "" , "jpg" ) ;
+$entities = _fsBaseRecursive( $scandir , "" , ".jpg" ) ;
 
 $env = array( ) ;
 $env["hn"]=_configBaseQuery("hostname");
@@ -74,7 +73,7 @@ foreach( $entities as $entity ) {
 
 $cc=0;
 
-$entities = _fsBaseRecursive( $scandir , "" , "jpeg" ) ;
+$entities = _fsBaseRecursive( $scandir , "" , ".jpeg" ) ;
 
 $env = array( ) ;
 $env["hn"]=_configBaseQuery("hostname");
