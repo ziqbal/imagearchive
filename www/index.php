@@ -1,24 +1,16 @@
-
-<style>
-.thumbnail{
-    height:100px;
-    border:0px solid green;
-    padding:3px;
-    margin:1px;
-}
-.c3{
-    background-color: #ff0000;
-}
-.c4{
-    background-color: #fff000;
-}
-</style>
-
 <?php
+// Days
+$inputLimit = 60 ;
+$inputOffset = 0 ;
+
+if(isset($_GET[ "limit" ])) $inputLimit = $_GET[ "limit" ] ;
+if(isset($_GET[ "offset" ])) $inputOffset = $_GET[ "offset" ] ;
+
+$nextOffset = $inputOffset + $inputLimit ;
 
 try {
 
-    $dbh = new PDO( "sqlite:" . "../data/current.db") ;
+    $dbh = new PDO( "sqlite:" . "../data/current.db" ) ;
     $dbh->setAttribute( PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION ) ;
     $dbh->setAttribute( PDO::ATTR_FETCH_TABLE_NAMES , true ) ;
 
@@ -29,40 +21,37 @@ try {
 
 }
 
+$sql = "SELECT * FROM entities where state = :state ORDER BY ord LIMIT :limit OFFSET :offset ;" ;
+$sth = $dbh->prepare( $sql , array( PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY ) ) ;
+$sth->execute( array( "state" => -1 , "limit" => $inputLimit,"offset" => $inputOffset)  );
 
-//$sql = "SELECT * FROM entities where state = :state ORDER BY rowid limit 250;" ;
-$sql = "SELECT * FROM entities where state = :state ORDER BY ord,rowid limit 250;" ;
+?>
 
-$sth = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-$sth->execute(array("state"=>-1));
+<style>
+.thumbnail{
+    height:100px;
+    border:0px solid green;
+    padding:3px;
+    margin:1px;
+}
 
+</style>
 
+<?php
 
-$lastPrefixMain="";
+print("<a href='?offset=0'>START<a>");
+print("&nbsp;");
+print("<a href='?offset=$nextOffset'>NEXT<a>");
 
-$cc=0;
-while($row = $sth->fetch( PDO::FETCH_ASSOC )){ 
+print("<br/>");
+
+while( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+
     $id=$row["id"];
     $d = json_decode( $row[ "data" ] , true ) ;
     $prefix=$d["prefix"];
     $ext = $d["fs"]["ext"];
 
-    $prefixParts=explode("/",$prefix);
+    print("<a href='../_cache_/$prefix-$id-l.$ext'><img class='thumbnail c$cc' src='../_cache_/$prefix-$id-t.$ext'/></a>");
 
-    $prefixMain=$prefixParts[0];
-
-    if($lastPrefixMain==""){
-        print("$prefixMain<br/>");
-        $lastPrefixMain=$prefixMain;
-    }
-    if($lastPrefixMain!="" && $lastPrefixMain!=$prefixMain){
-        print("<br/>$prefixMain<br/>");
-        $lastPrefixMain=$prefixMain;
-    }
-
-
-    print("<img class='thumbnail c$cc' src='../_cache_/$prefix-$id-t.$ext'/>");
-    $cc++;
 }
-
-

@@ -23,15 +23,13 @@ foreach( $entities as $e ) {
 
     $id = $e[ "id" ] ;
 
+    $ord = $e[ "ord" ] ;
+
     $fp = $d[ "fs" ][ "filepath" ] ;
     $ext = $d["fs"]["ext"];
 
-    $ctime= $d["st"]["ctime"];
-    $mtime= $d["st"]["mtime"];
-
-//    $htime = gmdate("Ymd/His", $mtime);
-    $htimeprefix = gmdate("His", $mtime);
-    $htime = gmdate("Ymd", $mtime);
+    $htimeprefix = gmdate("His", $ord);
+    $htime = gmdate("Ymd", $ord);
 
 
     $targetdir = _configBaseQuery("componentcache")."/$htime" ;
@@ -44,17 +42,17 @@ foreach( $entities as $e ) {
     }
 
 //    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-* $targetdir" ;
-    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-l.$ext $targetdir/$htimeprefix-$id-l.$ext" ;
+    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-l.$ext $targetdir/$htime-$htimeprefix-$id-l.$ext" ;
     system($cmd);
-    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-m.$ext $targetdir/$htimeprefix-$id-m.$ext" ;
+    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-m.$ext $targetdir/$htime-$htimeprefix-$id-m.$ext" ;
     system($cmd);
-    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-s.$ext $targetdir/$htimeprefix-$id-s.$ext" ;
+    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-s.$ext $targetdir/$htime-$htimeprefix-$id-s.$ext" ;
     system($cmd);
-    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-t.$ext $targetdir/$htimeprefix-$id-t.$ext" ;
+    $cmd = "mv "._configBaseQuery( "componentcache" ) . "/$id-t.$ext $targetdir/$htime-$htimeprefix-$id-t.$ext" ;
     system($cmd);
 //    print("$targetdir\n"); 
 
-    $d["prefix"]="$htime/$htimeprefix";
+    $d["prefix"]="$htime/$htime-$htimeprefix";
 
     //print_r($d);
 

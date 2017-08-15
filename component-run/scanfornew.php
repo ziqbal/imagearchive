@@ -56,7 +56,34 @@ foreach( $entities as $entity ) {
         $data[ "st" ] = stat($entity[ "filepath" ]);
         $data[ "in" ] = getimagesize($entity[ "filepath" ]);
 
-        $ord = $data["st"]["mtime"];
+
+        $exifTime = -1 ;
+
+        $exif = exif_read_data( $entity[ "filepath" ] , 'IFD0');
+        if( $exif===false ){
+        }else{ 
+
+            $exif = exif_read_data($entity[ "filepath" ] , 0, true);
+            foreach ($exif as $key => $section) {
+                foreach ($section as $name => $val) {
+        //            _logBaseWrite("$key.$name:$val");
+                    if("$key.$name"=="IFD0.DateTime"){
+                        $exifTime=strtotime(($val));
+                        //_logBaseWrite("yea[$val]");
+                        break;
+                    }
+                }
+            }
+        }
+
+        if($exifTime!=-1){
+            $ord = $exifTime;
+
+        }else{
+            $ord = $data["st"]["mtime"];
+
+        }
+
         $state = 0 ;
         _dbBaseInsert( $id, $state , $data , $ord ) ;
 
@@ -68,7 +95,7 @@ foreach( $entities as $entity ) {
     $cc++;
 
     _logBaseETA($cc,$totalEntities);
-    //if($cc>3) break;
+    if($cc>3) break;
 
 }
 
@@ -96,7 +123,37 @@ foreach( $entities as $entity ) {
         $data[ "st" ] = stat($entity[ "filepath" ]);
         $data[ "in" ] = getimagesize($entity[ "filepath" ]);
 
-        $ord = $data["st"]["mtime"];
+
+        $exifTime = -1 ;
+
+        $exif = exif_read_data( $entity[ "filepath" ] , 'IFD0');
+        if( $exif===false ){
+        }else{ 
+
+            $exif = exif_read_data($entity[ "filepath" ] , 0, true);
+            foreach ($exif as $key => $section) {
+                foreach ($section as $name => $val) {
+        //            _logBaseWrite("$key.$name:$val");
+                    if("$key.$name"=="IFD0.DateTime"){
+                        $exifTime=strtotime(($val));
+                        //_logBaseWrite("yea[$val]");
+                        break;
+                    }
+                }
+            }
+        }
+
+        if($exifTime!=-1){
+            $ord = $exifTime;
+            //_logBaseWrite("$ord");
+
+        }else{
+            $ord = $data["st"]["mtime"];
+
+        }
+
+
+
         $state = 0 ;
         _dbBaseInsert( $id, $state , $data , $ord ) ;
 
