@@ -59,11 +59,13 @@ foreach( $entities as $entity ) {
 
         $exifTime = -1 ;
 
-        $exif = exif_read_data( $entity[ "filepath" ] , 'IFD0');
+
+            $exif = @exif_read_data( $entity[ "filepath" ] , 'IFD0');
+
         if( $exif===false ){
         }else{ 
 
-            $exif = exif_read_data($entity[ "filepath" ] , 0, true);
+            $exif = @exif_read_data($entity[ "filepath" ] , 0, true);
             foreach ($exif as $key => $section) {
                 foreach ($section as $name => $val) {
         //            _logBaseWrite("$key.$name:$val");
@@ -76,7 +78,7 @@ foreach( $entities as $entity ) {
             }
         }
 
-        if($exifTime!=-1){
+        if($exifTime>0){
             $ord = $exifTime;
 
         }else{
@@ -95,7 +97,7 @@ foreach( $entities as $entity ) {
     $cc++;
 
     _logBaseETA($cc,$totalEntities);
-    if($cc>3) break;
+    //if($cc>3) break;
 
 }
 
@@ -126,11 +128,15 @@ foreach( $entities as $entity ) {
 
         $exifTime = -1 ;
 
-        $exif = exif_read_data( $entity[ "filepath" ] , 'IFD0');
+
+
+            $exif = @exif_read_data( $entity[ "filepath" ] , 'IFD0');
+
+
         if( $exif===false ){
         }else{ 
 
-            $exif = exif_read_data($entity[ "filepath" ] , 0, true);
+            $exif = @exif_read_data($entity[ "filepath" ] , 0, true);
             foreach ($exif as $key => $section) {
                 foreach ($section as $name => $val) {
         //            _logBaseWrite("$key.$name:$val");
@@ -143,7 +149,7 @@ foreach( $entities as $entity ) {
             }
         }
 
-        if($exifTime!=-1){
+        if($exifTime>0){
             $ord = $exifTime;
             //_logBaseWrite("$ord");
 
