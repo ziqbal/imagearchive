@@ -42,6 +42,8 @@ $env = array( ) ;
 $env["hn"]=_configBaseQuery("hostname");
 $env["ts"]=_configBaseQuery("timestamp");
 
+$totalEntities = count($entities);
+
 foreach( $entities as $entity ) {
 
     $id = sha1_file( $entity[ "filepath" ] ) ;
@@ -61,9 +63,11 @@ foreach( $entities as $entity ) {
 
     }
 
-    print( "." ) ;
+    //print( "." ) ;
 
     $cc++;
+
+    _logBaseETA($cc,$totalEntities);
     //if($cc>3) break;
 
 }
@@ -74,6 +78,7 @@ foreach( $entities as $entity ) {
 $cc=0;
 
 $entities = _fsBaseRecursive( $scandir , "" , ".jpeg" ) ;
+$totalEntities = count($entities);
 
 $env = array( ) ;
 $env["hn"]=_configBaseQuery("hostname");
@@ -99,6 +104,7 @@ foreach( $entities as $entity ) {
 
     print( "." ) ;
     $cc++;
+    _logBaseETA($cc,$totalEntities);
     //if($cc>10) break;
 
 }

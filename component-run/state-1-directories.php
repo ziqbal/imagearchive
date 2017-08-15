@@ -9,6 +9,9 @@ print( "\n" ) ;
 
 
 $entities = _dbBaseSelect( 1 ) ;
+$totalEntities = count($entities);
+
+$cc=0;
 
 
 foreach( $entities as $e ) {
@@ -57,7 +60,9 @@ foreach( $entities as $e ) {
 
     _dbBaseSetDataState($id,$d,2);
 
-    print( "." ) ;
+    $cc++;
+
+    _logBaseETA($cc,$totalEntities);
 
 } 
 

@@ -19,6 +19,7 @@ large 1440000
 $cc=0;
 
 $entities = _dbBaseSelect( 0 ) ;
+$totalEntities = count($entities);
 
 
 
@@ -78,9 +79,9 @@ foreach( $entities as $e ) {
 
     _dbBaseStateSet($id,1);
 
-    print("!");
 
     $cc++;
+    _logBaseETA($cc,$totalEntities);
     //if($cc>10) break;
 } 
 
