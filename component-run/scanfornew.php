@@ -46,6 +46,8 @@ $totalEntities = count($entities);
 
 foreach( $entities as $entity ) {
 
+    if(substr($entity[ "filename" ],0,1)==".") continue;
+
     $id = sha1_file( $entity[ "filepath" ] ) ;
 
     if( !_dbBaseContains( $id ) ) {
@@ -115,6 +117,7 @@ $env["ts"]=_configBaseQuery("timestamp");
 
 foreach( $entities as $entity ) {
 
+    if(substr($entity[ "filename" ],0,1)==".") continue;
     $id = sha1_file( $entity[ "filepath" ] ) ;
 
     if( !_dbBaseContains( $id ) ) {

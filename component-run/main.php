@@ -17,7 +17,7 @@ if(substr($s1,0,strlen($s2))==$s2){
 
 
 
-//$d=_dbBaseGet("2fb385d0f5518a9eb782455a3ac5ea56382493b0");
+//$d=_dbBaseGet("108dc0f8896cf41a73cf4ed60d21a5f3087030cb");
 //print_r($d);exit;
 
 //_configBaseDebug();exit;
